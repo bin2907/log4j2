@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="mhealth.mail.error.to">bin2907@gmail.com</Property>
+		<Property name="mhealth.mail.error.subject">Error Log</Property>
+		<Property name="mhealth.mail.smtp.username">binh.nguyen@lctadvisory.com</Property>
+		<Property name="mhealth.mail.smtp.password">P@ssword123</Property>
+		<Property name="mhealth.mail.smtp.host">smtp.gmail.com</Property>
+		<Property name="mhealth.mail.smtp.port">25</Property>
+		<Property name="mhealth.mail.bufferSize">50</Property>
+	</Properties>
+
+	<Appenders>
+		<!--Console-->
+		<Console name="CONSOLE_SYSTEM_OUT" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+		</Console>
+
+		<Console name="CONSOLE_SYSTEM_ERR" target="SYSTEM_ERR">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+		</Console>
+
+		<!--File-->
+		<RollingFile name="FILE_LOG_ALL" fileName="logs/all.log"
+					 filePattern="all-%i.log.gz">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="2" compressionLevel="4"/>
+		</RollingFile>
+
+		<RollingFile name="FILE_LOG_USER_FEATURE" fileName="logs/user.log"
+					 filePattern="user-%i.log.gz">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="2" compressionLevel="4"/>
+		</RollingFile>
+
+		<RollingFile name="FILE_LOG_SYSTEM_ERR" fileName="logs/error.log"
+					 filePattern="logs/MT_UUID/error-%i.log.gz">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="2" compressionLevel="4"/>
+		</RollingFile>
+
+		<!-- Email notification -->
+		<SMTP name="SEND_MAIL"
+			  to="${mhealth.mail.error.to}"
+			  subject="${mhealth.mail.error.subject}"
+			  smtpUsername="${mhealth.mail.smtp.username}"
+			  smtpPassword="${mhealth.mail.smtp.password}"
+			  smtpHost="${mhealth.mail.smtp.host}"
+			  smtpPort="${mhealth.mail.smtp.port}"
+			  bufferSize="${mhealth.mail.bufferSize}">
+		</SMTP>
+	</Appenders>
+
+	<Loggers>
+		<Root level="all">
+			<AppenderRef ref="FILE_LOG_ALL"/>
+		</Root>
+
+		<Logger name="info" level="info">
+			<AppenderRef ref="CONSOLE_SYSTEM_OUT"/>
+		</Logger>
+
+		<Logger name="error" level="error">
+			<AppenderRef ref="FILE_LOG_SYSTEM_ERR"/>
+			<AppenderRef ref="CONSOLE_SYSTEM_ERR"/>
+		</Logger>
+
+		<Logger name="user" level="info">
+			<AppenderRef ref="FILE_LOG_USER_FEATURE"/>
+
+			<AppenderRef ref="CONSOLE_SYSTEM_OUT"/>
+		</Logger>
+
+		<Logger name="mail" level="error">
+			<AppenderRef ref="SEND_MAIL"/>
+		</Logger>
+	</Loggers>
+</Configuration>
