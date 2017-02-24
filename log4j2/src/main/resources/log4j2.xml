@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
 	<Properties>
-		<Property name="mhealth.mail.error.to">bin2907@gmail.com</Property>
+		<Property name="mhealth.mail.error.to"></Property>
 		<Property name="mhealth.mail.error.subject">Error Log</Property>
-		<Property name="mhealth.mail.smtp.username">binh.nguyen@lctadvisory.com</Property>
-		<Property name="mhealth.mail.smtp.password">P@ssword123</Property>
+		<Property name="mhealth.mail.smtp.username"></Property>
+		<Property name="mhealth.mail.smtp.password"></Property>
 		<Property name="mhealth.mail.smtp.host">smtp.gmail.com</Property>
 		<Property name="mhealth.mail.smtp.port">25</Property>
 		<Property name="mhealth.mail.bufferSize">50</Property>
